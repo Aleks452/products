@@ -27,7 +27,7 @@ services:
     networks:
       - batch_network
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgresql:5432/challenge
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgresql:5432/products
       SPRING_DATASOURCE_USERNAME: ${POSTGRESQL_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${POSTGRESQL_PASSWORD}
       
