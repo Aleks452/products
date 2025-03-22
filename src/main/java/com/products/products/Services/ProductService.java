@@ -52,11 +52,22 @@ public class ProductService {
 	}
 	
 	@Transactional
-	public ProductDTO createProducts(ProductDTO productDTO) {
-		ProductEntity productEntity = convertEntity(productDTO);
-		productRepository.save(productEntity);
-		return convertDTO(productEntity);
+	public ProductDTO saveOrUpdateProduct(ProductDTO productDTO) {
+	    ProductEntity productEntity = productRepository.findByProductId(productDTO.getProductId())
+	        .map(existingProduct -> {
+	            
+	            existingProduct.setProductName(productDTO.getProductName());
+	            existingProduct.setProductCategory(productDTO.getProductCategory());
+	            existingProduct.setAvailable(productDTO.isAvailable());
+	            existingProduct.setProductPrice(productDTO.getProductPrice());
+	            return existingProduct;
+	        })
+	        .orElseGet(() -> convertEntity(productDTO));
+
+	    productRepository.save(productEntity);
+	    return convertDTO(productEntity);
 	}
+
 	
 	
 	@Transactional

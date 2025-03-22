@@ -19,22 +19,23 @@ import lombok.Setter;
 public class ProductDTO {
 	
 	@NotNull (groups = {FirstMandatoryValidation.class})
+	@Positive(groups = {FirstMandatoryValidation.class})
 	private Long productId;
 	
-	@NotNull(groups = {SecondMandatoryValidation.class})
-	@NotBlank(groups = {SecondMandatoryValidation.class})
+	@NotNull(groups = {FirstMandatoryValidation.class, SecondMandatoryValidation.class})
+	@NotBlank(groups = {FirstMandatoryValidation.class, SecondMandatoryValidation.class})
 	private String productName;
 	
-	@NotNull(groups = {SecondMandatoryValidation.class})
-	@NotBlank(groups = {SecondMandatoryValidation.class})
+	@NotNull(groups = {FirstMandatoryValidation.class, SecondMandatoryValidation.class})
+	@NotBlank(groups = {FirstMandatoryValidation.class, SecondMandatoryValidation.class})
 	private String productCategory;
 	
-	@NotNull(groups = {SecondMandatoryValidation.class})
+	@NotNull(groups = {FirstMandatoryValidation.class, SecondMandatoryValidation.class})
 	@JsonProperty("isAvailable")
 	private boolean isAvailable;
 	
-	@NotNull(groups = {SecondMandatoryValidation.class})
-	@Positive(groups = {SecondMandatoryValidation.class})
+	@NotNull(groups = {FirstMandatoryValidation.class, SecondMandatoryValidation.class})
+	@Positive(groups = {FirstMandatoryValidation.class, SecondMandatoryValidation.class})
 	private double productPrice;
 	
 		

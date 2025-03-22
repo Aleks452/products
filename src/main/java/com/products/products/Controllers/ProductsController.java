@@ -21,6 +21,7 @@ import com.products.products.Dtos.ProductDTO;
 import com.products.products.Exceptions.CriterialNotFoundException;
 import com.products.products.Repositories.ProductRepository;
 import com.products.products.Services.ProductService;
+import com.products.products.Validations.FirstMandatoryValidation;
 import com.products.products.Validations.SecondMandatoryValidation;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -106,8 +107,20 @@ public class ProductsController {
 			"This endpoint allows you to create a new product")
 	@PostMapping("/create")
 	public ResponseEntity<ProductDTO> createProducts(@Validated (SecondMandatoryValidation.class) @RequestBody ProductDTO productDTO) {		
-		ProductDTO product = productService.createProducts(productDTO); 
+		ProductDTO product = productService.saveOrUpdateProduct(productDTO); 
 		return ResponseEntity.status(HttpStatus.CREATED).body(product);
+
+	}
+	
+	
+	@Operation(
+			summary = "Update a product.",
+			description =
+			"This endpoint allows you to update a new product")
+	@PutMapping("/update")
+	public ResponseEntity<ProductDTO> updateProducts(@Validated (FirstMandatoryValidation.class) @RequestBody ProductDTO productDTO) {		
+		ProductDTO product = productService.saveOrUpdateProduct(productDTO); 
+		return ResponseEntity.status(HttpStatus.OK).body(product);
 
 	}
 	
