@@ -52,6 +52,14 @@ public class ProductService {
 	}
 	
 	@Transactional
+	public ProductDTO createProducts(ProductDTO productDTO) {
+		ProductEntity productEntity = convertEntity(productDTO);
+		productRepository.save(productEntity);
+		return convertDTO(productEntity);
+	}
+	
+	
+	@Transactional
     public void deleteProductById(Long productId) {
         productRepository.deleteByProductId(productId);
     }
@@ -59,6 +67,17 @@ public class ProductService {
 	
 	private ProductDTO convertDTO(ProductEntity productEntity) {
 		return new ProductDTO(productEntity.getProductId(), productEntity.getProductName(), productEntity.getProductCategory(), productEntity.isAvailable(), productEntity.getProductPrice());
+	}
+	
+	
+	private ProductEntity convertEntity(ProductDTO productDTO) {
+		return new ProductEntity(
+				null,
+				productDTO.getProductName(),
+				productDTO.getProductCategory(),
+				productDTO.isAvailable(),
+				productDTO.getProductPrice()				
+				);
 	}
 	
 }
