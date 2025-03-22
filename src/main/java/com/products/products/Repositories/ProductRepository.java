@@ -16,5 +16,6 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
 	List<ProductEntity> findByIsAvailable(boolean isAvailable);
 	List<ProductEntity> findByProductPriceBetween(double productPriceMin, double productPriceMax);
 	
+	void deleteByProductId(Long productId);
 	
 }

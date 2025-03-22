@@ -12,6 +12,8 @@ import com.products.products.Entities.ProductEntity;
 import com.products.products.Exceptions.CriterialNotFoundException;
 import com.products.products.Repositories.ProductRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class ProductService {
 
@@ -21,7 +23,7 @@ public class ProductService {
 	
 	public Optional<ProductDTO> getProductById(Long productId){
 		return Optional.ofNullable(productRepository.findByProductId(productId)
-													.orElseThrow(() -> new CriterialNotFoundException("Product" + productId + " was not found")))
+													.orElseThrow(() -> new CriterialNotFoundException("Product: " + productId + " was not found")))
 													.map(this::convertDTO);
 	}
 	
@@ -48,6 +50,11 @@ public class ProductService {
 					 .map(this::convertDTO)
 					 .collect(Collectors.toList());	
 	}
+	
+	@Transactional
+    public void deleteProductById(Long productId) {
+        productRepository.deleteByProductId(productId);
+    }
 		
 	
 	private ProductDTO convertDTO(ProductEntity productEntity) {
